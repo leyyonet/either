@@ -1,4 +1,4 @@
-import {EitherLike, EitherStatus} from "./types";
+import {EitherFoldLike, EitherLike, EitherStatus} from "./types";
 
 /**
  * {@code Either} is an object that represents a choice between two possible objects of potentially two different types. One common use for something
@@ -8,7 +8,7 @@ import {EitherLike, EitherStatus} from "./types";
  * @param <F> The type of the first choice
  * @param <S> The type of the second choice
  */
-export class Either<F = unknown, S = unknown> {
+export class Either<F = unknown, S = unknown> implements EitherLike<F, S> {
 
     /** The {@code first} member variable. */
     private readonly _status: EitherStatus;
@@ -32,40 +32,40 @@ export class Either<F = unknown, S = unknown> {
         this._status = status;
     }
 
-    /**
-     * Checks if is first.
-     *
-     * @return true, if is first
-     */
+    /** {@inheritDoc} */
+    get status(): EitherStatus {
+        return this._status;
+    }
+
+    /** {@inheritDoc} */
     get isFirst(): boolean {
         return this._status === 'first';
     }
 
-    /**
-     * Checks if is second.
-     *
-     * @return true, if is second
-     */
+    /** {@inheritDoc} */
     get isSecond(): boolean {
         return this._status === 'second';
     }
 
-    /**
-     * Gets the first choice.
-     *
-     * @return the first
-     */
+    /** {@inheritDoc} */
     get first(): F {
         return this._first;
     }
 
-    /**
-     * Gets the second choice.
-     *
-     * @return the second
-     */
+    /** {@inheritDoc} */
     get second(): S {
         return this._second;
+    }
+
+    /** {@inheritDoc} */
+    fold<F2 = F, S2 = S>(): EitherFoldLike<F2, S2> {
+        const like: EitherFoldLike<F2, S2> = {status: this._status};
+        if (this._status === 'first') {
+            like.first = this._first as unknown as F2;
+        } else if (this._status === 'second') {
+            like.second = this._second as unknown as S2;
+        }
+        return like;
     }
 
     /**
@@ -86,20 +86,5 @@ export class Either<F = unknown, S = unknown> {
      */
     static second<F>(second: F) {
         return new Either<F>(undefined, second, 'second');
-    }
-
-    /**
-     * Returns first and second values with status
-     *
-     * @return the new {@linkcode EitherLike}
-     */
-    get fold(): EitherLike {
-        const like: EitherLike = {status: this._status};
-        if (this._status === 'first') {
-            like.first = this._first;
-        } else if (this._status === 'second') {
-            like.second = this._second;
-        }
-        return like;
     }
 }
