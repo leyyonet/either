@@ -1,4 +1,6 @@
 import {EitherFoldLike, EitherLike, EitherStatus} from "./index.types.js";
+import {setFqn} from "@leyyo/common";
+import {FQN} from "./internal.js";
 
 /**
  * {@code Either} is an object that represents a choice between two possible objects of potentially two different types. One common use for something
@@ -88,3 +90,4 @@ export class Either<F = unknown, S = unknown> implements EitherLike<F, S> {
         return new Either<F>(undefined, second, 'second');
     }
 }
+setFqn(Either, FQN);
