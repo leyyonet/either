@@ -1,4 +1,4 @@
-import {EitherFoldLike, EitherLike, EitherStatus} from "./types";
+import {EitherFoldLike, EitherLike, EitherStatus} from "./index.types.js";
 
 /**
  * {@code Either} is an object that represents a choice between two possible objects of potentially two different types. One common use for something
