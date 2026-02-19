@@ -1,3 +1,4 @@
 // noinspection JSUnusedGlobalSymbols
-export const foretell_leyyoEither = [
-];
+import { foretell_leyyoCommon } from "@leyyo/common";
+
+export const foretell_leyyoEither = [...foretell_leyyoCommon];
