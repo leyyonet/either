@@ -1,2 +1,6 @@
-leyyo.either:
-  test: true
+ignore: true
+rules:
+  - none
+config:
+  leyyo.either:
+    foo: bar
